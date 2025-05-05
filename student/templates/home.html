@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Management System</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .hero {
+    background: linear-gradient(to right, #0d6efd, #6610f2);
+    color: white;
+    padding: 60px 0;
+  }
+  .card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    transition: 0.3s ease;
+  }
+  footer {
+    background-color: #343a40;
+    color: white;
+    padding: 40px 0;
+  }
+  footer a {
+    color: #adb5bd;
+    text-decoration: none;
+  }
+  footer a:hover {
+    color: white;
+  }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+
+{% include 'nav.html'%}
+<!-- Hero Section -->
+<section class="hero text-center">
+  <div class="container">
+    <h1 class="display-4 fw-bold">Welcome to Student Management System</h1>
+    <p class="lead">Manage your students, courses, and records with ease.</p>
+    <a href="#" class="btn btn-light btn-lg mt-3">Get Started</a>
+  </div>
+</section>
+
+<!-- Main Cards -->
+<div class="container my-5">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title">View Students</h5>
+          <p class="card-text">Browse and manage the list of all enrolled students.</p>
+          <a href="/viewstudent/" class="btn btn-outline-primary">Go</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title">Add Student</h5>
+          <p class="card-text">Add a new student and update records easily.</p>
+          <a href="addstudent/" class="btn btn-outline-success">Add</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title">Generate Reports</h5>
+          <p class="card-text">Generate and download performance reports.</p>
+          <a href="#" class="btn btn-outline-warning">Generate</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+{% include 'footer.html'%}
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Registration Report</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Special Theme (Custom CSS) -->
+  <style>
+    body {
+      background: #f9f9f9;
+      font-family: 'Poppins', sans-serif;
+    }
+    .report-container {
+      background: #fff;
+      padding: 30px;
+      margin: 20px auto;
+      max-width: 900px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .report-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .report-header h1 {
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    .table th {
+      background: #3498db;
+      color: white;
+    }
+    .student-photo {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid #3498db;
+    }
+    @media print {
+      body {
+        background: none;
+      }
+      .no-print {
+        display: none;
+      }
+    }
+    .table{
+      border: 1px solid rgb(113, 112, 112);
+    }
+  </style>
+</head>
+<body>
+
+<div class="report-container">
+  <div class="report-header">
+    <h1>Institute Name Here</h1>
+    <p>Address: 123 Main Street, City, Country</p>
+    <p>Contact: +1234567890 | Email: info@institute.com</p>
+  </div>
+
+  <div class="text-center mb-4">
+    <img src="{{registration.image.url}}" alt="Student Photo" class="student-photo">
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <tbody>
+      <tr>
+        <th>Registration Date</th>
+        <td>{{registration.created_at}}</td>
+      </tr>
+      <tr>
+        <th>Roll Number</th>
+        <td>{{registration.rollnumber}}</td>
+      </tr>
+      <tr>
+        <th>Student Name</th>
+        <td>{{registration.name}}</td>
+      </tr>
+      <tr>
+        <th>Gender</th>
+        <td>{{registration.gender}}</td>
+      </tr>
+      <tr>
+        <th>Father's Name</th>
+        <td>{{registration.fname}}</td>
+      </tr>
+      <tr>
+        <th>Mother's Name</th>
+        <td>{{registration.mname}}</td>
+      </tr>
+      <tr>
+        <th>Date of Birth</th>
+        <td>{{registration.dob}}</td>
+      </tr>
+      <tr>
+        <th>Class</th>
+        <td>{{registration.clss}}</td>
+      </tr>
+      <tr>
+        <th> Mobile</th>
+        <td>{{registration.mobile}}</td>
+      </tr>
+      <tr>
+        <th>E-mail</th>
+        <td>{{registration.email}}</td>
+      </tr>
+      <tr>
+        <th>Annual Fee</th>
+        <td>{{registration.fee}}</td>
+      </tr>
+      <tr>
+        <th>Monthly Fee</th>
+        <td>{{registration.mlyfee}}</td>
+      </tr>
+      <tr>
+        <th>Address</th>
+        <td>Student Address Default.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-center mt-4 no-print">
+    <button class="btn btn-primary" onclick="downloadPDF()">Download PDF</button>
+  </div>
+</div>
+
+<!-- jsPDF & html2canvas for PDF download -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+  async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4');
+
+    const report = document.querySelector('.report-container');
+    const canvas = await html2canvas(report, { scale: 2 });
+
+    const imgData = canvas.toDataURL('image/png');
+    const imgProps= doc.getImageProperties(imgData);
+    const pdfWidth = doc.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    doc.save('{{registration.name}}.pdf');
+  }
+</script>
+
+</body>
+</html>
