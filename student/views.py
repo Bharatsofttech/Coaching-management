@@ -1,14 +1,22 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import random
+<<<<<<< HEAD
 from .models import Students, fee, Attendance
+=======
+from .models import Students, fee
+>>>>>>> bb4b90d81983599a451be09786355518a470b682
 from datetime import datetime
 from django.contrib import messages
 from django.db import transaction
 from django.db.models import Sum
 from datetime import datetime
+<<<<<<< HEAD
 #from dateutil.relativedelta import relativedelta
 from datetime import date
+=======
+from dateutil.relativedelta import relativedelta
+>>>>>>> bb4b90d81983599a451be09786355518a470b682
 
 # Create your views here.
 def home(request):
@@ -40,7 +48,11 @@ def submit(request):
             img = request.FILES['image']
             insert = Students(rollnumber=rollnumber,name=name, fname=fname, mname=mname, dob=dob, clss=clss, fee=fee1, yrlyfee=fee1,mobile=mobile,email=email,created_at=date, image=img,gender=gender,mlyfee=mlyfee1)
             insert.save()
+<<<<<<< HEAD
             messages.success(request, "🎉 Success! Your data was Saved.")
+=======
+            messages.success(request, "🎉 Success! Your data was saved.")
+>>>>>>> bb4b90d81983599a451be09786355518a470b682
             return redirect("/viewstudent/")
         
             
@@ -67,7 +79,11 @@ def update(request,id):
             update.name = newname
             update.fname = newfname
             update.mname = newmname
+<<<<<<< HEAD
             update.dob = newdob
+=======
+            update.dob = newdob;
+>>>>>>> bb4b90d81983599a451be09786355518a470b682
             update.clss = newclss
             update.mobile = newmobile
             update.email = newemail
@@ -141,6 +157,7 @@ def statement1(request):
 def registration(request,id):
     registration = Students.objects.get(id=id)
 
+<<<<<<< HEAD
     return render (request,'registration.html',{'registration':registration})
 def attendance(request):
     studata = Students.objects.all()
@@ -175,3 +192,6 @@ def view_all_attendance(request):
     return render(request, 'all_attendance.html', {
         'attendance_records': attendance_records
     })
+=======
+    return render (request,'registration.html',{'registration':registration})
+>>>>>>> bb4b90d81983599a451be09786355518a470b682

@@ -25,6 +25,7 @@ class fee(models.Model):
     deposit = models.FloatField()
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
+<<<<<<< HEAD
         db_table = "feedeposit"
 class Attendance(models.Model):
     student = models.ForeignKey(Students, on_delete=models.CASCADE)
@@ -33,3 +34,6 @@ class Attendance(models.Model):
 
     class Meta:
         unique_together = ('student', 'date')
+=======
+        db_table = "feedeposit"
+>>>>>>> bb4b90d81983599a451be09786355518a470b682
