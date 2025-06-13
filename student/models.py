@@ -26,3 +26,10 @@ class fee(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
         db_table = "feedeposit"
+class Attendance(models.Model):
+    student = models.ForeignKey(Students, on_delete=models.CASCADE)
+    date = models.DateField()
+    status = models.CharField(max_length=10, choices=[('Present', 'Present'), ('Absent', 'Absent')])
+
+    class Meta:
+        unique_together = ('student', 'date')

@@ -16,4 +16,7 @@ urlpatterns = [
     path('statement/',views.statement,name="statement"),
     path('statement1/',views.statement1,name="statement1"),
     path('registration/<int:id>',views.registration,name="registration"),
+    path('attendance/',views.attendance,name="attendance"),
+    path('attendance1/',views.mark_attendance,name="attendance1"),
+    path('viewattendance/',views.view_all_attendance,name="viewattendance"),
 ]

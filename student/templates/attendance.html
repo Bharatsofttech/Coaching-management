@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Attendance</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    
+    .form-container {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin: 50px auto;
+    }
+    .form-title {
+      color: #0d6efd;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .btn-primary {
+      background-color: #0d6efd;
+      border: none;
+    }
+    footer {
+    background-color: #343a40;
+    color: white;
+    padding: 40px 0;
+  }
+  footer a {
+    color: #adb5bd;
+    text-decoration: none;
+  }
+  footer a:hover {
+    color: white;
+  }
+  .width{
+    width: 100px;
+  }
+  .width img:hover{
+    cursor: pointer;
+      transform: scale(1.8);
+    }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    {% include 'nav.html'%}
+    {% if messages %}
+  {% for message in messages %}
+    <div 
+      class="alert {% if message.tags == 'success' %}alert-success
+                  {% elif message.tags == 'error' %}alert-danger
+                  {% elif message.tags == 'warning' %}alert-warning
+                  {% elif message.tags == 'info' %}alert-info{% endif %} 
+                  alert-dismissible fade show" 
+      role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+    <div class="mt-2 p-2 overflow-scroll">
+        
+        <form action="/attendance1/" method="post" class="form-container">
+        {% csrf_token %}
+            <div class="table-responsive">
+                     <h3 class="mb-4 text-center">Attandance Form</h3>
+          <table class="table table-bordered table-striped align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Roll Number</th>
+                <th>Name</th>
+                <th>Absent/Present</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+                {% for studata in studata %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+
+                
+                <td>{{studata.rollnumber}}</td>
+                <td>{{studata.name}}</td>
+                <td><select name="{{studata.id}}" class="form-select">
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+          </select></td>
+                
+                
+          
+              </tr>
+              {% endfor %}
+              
+             
+            </tbody>
+          </table>
+          <button type="submit" class="btn btn-primary">Submit Attendance</button>
+        </div>
+        </form>
+        
+      </div>
+  {% include 'footer.html'%}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

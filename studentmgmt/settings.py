@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-w*t35^dtyn5y4!c+nxim#3s-n^txxjc3rcm#wu3@31*stj^f@4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -82,11 +82,11 @@ WSGI_APPLICATION = 'studentmgmt.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'studentmgmt',
+        'NAME': 'studentmgmt-db',  # Replace with your database name
         'USER': 'root',
-        'PASSWORD': 'Bharat@2025',
-        'HOST': 'localhost',  # Or the address of your MySQL server
-        'PORT': '3306',       # Default MySQL port
+        'PASSWORD': 'Arohi@2014$_',
+        'HOST': '/cloudsql/default-461820:us-central1:studentmgmt-mysql',  # Or the address of your MySQL server
+        'PORT': '3308',       # Default MySQL port
     }
 }
 

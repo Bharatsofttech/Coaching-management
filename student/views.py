@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import random
-from .models import Students, fee
+from .models import Students, fee, Attendance
 from datetime import datetime
 from django.contrib import messages
 from django.db import transaction
 from django.db.models import Sum
 from datetime import datetime
 #from dateutil.relativedelta import relativedelta
+from datetime import date
 
 # Create your views here.
 def home(request):
@@ -39,7 +40,7 @@ def submit(request):
             img = request.FILES['image']
             insert = Students(rollnumber=rollnumber,name=name, fname=fname, mname=mname, dob=dob, clss=clss, fee=fee1, yrlyfee=fee1,mobile=mobile,email=email,created_at=date, image=img,gender=gender,mlyfee=mlyfee1)
             insert.save()
-            messages.success(request, "🎉 Success! Your data was saved.")
+            messages.success(request, "🎉 Success! Your data was Saved.")
             return redirect("/viewstudent/")
         
             
@@ -66,7 +67,7 @@ def update(request,id):
             update.name = newname
             update.fname = newfname
             update.mname = newmname
-            update.dob = newdob;
+            update.dob = newdob
             update.clss = newclss
             update.mobile = newmobile
             update.email = newemail
@@ -141,3 +142,36 @@ def registration(request,id):
     registration = Students.objects.get(id=id)
 
     return render (request,'registration.html',{'registration':registration})
+def attendance(request):
+    studata = Students.objects.all()
+    return render(request, 'attendance.html', {'studata': studata})
+
+def mark_attendance(request):
+    students = Students.objects.all()
+    if request.method == 'POST':
+        already_marked = []
+        for student in students:
+            status = request.POST.get(str(student.id))
+            # Check if attendance already exists for this student and date
+            if not Attendance.objects.filter(student=student, date=date.today()).exists():
+                Attendance.objects.create(
+                    student=student,
+                    date=date.today(),
+                    status=status
+                )
+                messages.success(request, "Attendance marked successfully!")
+                return redirect('/attendance/')
+            else:
+                already_marked.append(student.rollnumber)
+        if already_marked:
+            messages.warning(request, f"Attendance already marked for roll numbers: {', '.join(map(str, already_marked))}.")
+        
+    else:
+        messages.error(request, "Invalid Credintials! Please try again.")
+        return redirect('/attendance/')
+def view_all_attendance(request):
+    # Order by date descending and student's rollnumber
+    attendance_records = Attendance.objects.select_related('student').order_by('-date', 'student__rollnumber')
+    return render(request, 'all_attendance.html', {
+        'attendance_records': attendance_records
+    })
